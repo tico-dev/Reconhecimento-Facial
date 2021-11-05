@@ -172,7 +172,7 @@ class RegisterRoot(Tk):
 
     def browse_files(self):
         filename = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo de imagem",
-                                              filetype=(("jpeg", "*.jpg"), ("png", "*.png")))
+                                              filetype=(("jpeg", "*.jpg"), ("jpeg", "*.jpeg"), ("png", "*.png")))
         self.imagelabel.config(text='')
         self.imagelabel.text = ''
         self.imagelabel.configure(text=filename if len(filename) < 35 else '%.35s' % filename + '...')
@@ -208,8 +208,9 @@ class RegisterRoot(Tk):
             return True
 
     def update_inputs(self):
+        if self.user_image_file:
+            self.user_image_encoded = encode_image_to_uint8(self.user_image_file)
         self.username = capitalize(self.username_button.get())
-        self.user_image_encoded = encode_image_to_uint8(self.user_image_file)
         self.email = str(self.email_button.get()).lower()
         self.phone = re.sub(r'[ \t]+', '', re.sub('/[^0-9]/', '', self.phone_button.get()))
         self.rank = self.rankLevel.get()
