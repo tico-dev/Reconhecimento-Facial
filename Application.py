@@ -1,5 +1,5 @@
 from Graphical_Interfaces.user_registration import RegisterRoot
-from Graphical_Interfaces.user_authentication import AuthenticationRoot
+from Graphical_Interfaces.user_authentication import AuthenticatorRoot
 from time import sleep
 
 
@@ -29,7 +29,7 @@ if __name__ == '__main__':
                 continue
             elif decision == 2:
                 print("provavelmente uma janela para autenticação se abriu em segundo plano")
-                autheticationApp = AuthenticationRoot()
+                autheticationApp = AuthenticatorRoot()
                 autheticationApp.mainloop()
                 continue
             elif decision == 3:

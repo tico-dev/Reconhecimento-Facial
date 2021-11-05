@@ -63,7 +63,7 @@ class AuthenticatorRoot(Tk):
 
     def browse_files(self):
         filename = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo de imagem",
-                                              filetype=(("jpeg", "*.jpg"), ("png", "*.png")))
+                                              filetype=(("jpeg", "*.jpg"), ("jpeg", "*.jpeg"), ("png", "*.png")))
         self.imagelabel.config(text='')
         self.imagelabel.text = ''
         self.imagelabel.configure(text=filename if len(filename) < 35 else '%.35s' % filename + '...')
