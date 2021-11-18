@@ -98,10 +98,9 @@ class Database:
         user_created = None
         try:
             query = Queries.QUERY_INSERT_USER
-            self.cursor.execute(query, (user.name, user.mail, user.phone, user.image, user.rankID))
+            self.cursor.execute(query, (user.name, user.mail, user.phone, user.imagepath, user.rankID))
             print(f'query de insert executada!!! rows inseridas: {self.cursor.rowcount}')
             self.connection.commit()
-            self.__show_user(user.name)
             user_created = True
 
         except IntegrityError as E:
@@ -117,13 +116,18 @@ class Database:
     def __create_ranks(self):
         try:
             ranks = [
-                ('Usuário', 'Cargo padrão'),
+                ('Usuário',
+                 'Fungicidas mais utilizados: Mancozebe, compostos à base de cobre, Enxofre, Piraclostrobina, '
+                 'Azoxistrobina, Protioconazol, Fluxapiroxade'),
 
-                ('Direto de Divisão',
-                 'Cargo exclusivo para os diretores de divisões. Acesso à informações confidenciais'),
+                ('Diretor de Divisão',
+                 'Estado que mais utiliza agrotóxicos: Mato Grosso desponta como o campeão na compra de herbicidas, especialmente, o glifosato, líder brasileiro de vendas. '
+                 'No estado, no Rio Grande do Sul e no Paraná, o consumo do glifosato é de 9 quilos a 19 quilos por hectare (ha).'),
 
                 ('Ministro do Meio Ambiente',
-                 'Cargo exclusivo para o responsável pelo Ministério do Meio Ambiente. Acesso à todas informações')
+                 'Registros de morte por agrotóxico: No Brasil, entre 2007 e 2014, foram registradas quase 2 mil mortes por intoxicação agrícola, '
+                 'média de 148 óbitos por ano ou um caso a cada dois dias e meio. O campeão é o Paraná, com 231 falecimentos no período, '
+                 'seguido por Pernambuco (151) e o trio São Paulo, Minas Gerais e Ceará (83 cada um).')
             ]
             query = Queries.QUERY_INSERT_RANKS
             self.cursor.executemany(query, ranks)
@@ -131,28 +135,59 @@ class Database:
         except Error as E:
             print(f'[DEBUG] erro em create_ranks(): {E}')
 
-    def __show_user(self, name):
-        print("show user foi chado!!!")
-        self.cursor.execute(f'''SELECT image FROM USERS WHERE NAME = "{name}"''')
-        result = self.cursor.fetchone()[0]  # Retorna um único resultado da query
-        print('passou do result')
-        self.__show_image(result)
-        print('teoricamente chamou o show image')
+    def get_users(self):
+        self.cursor.execute(f'''SELECT * FROM USERS''')
+        result = self.cursor.fetchall()
+        return result
+
+    def get_user_by_id(self, ID):
+        self.cursor.execute(f'''SELECT * FROM USERS WHERE userID = "{ID}"''')
+        result = self.cursor.fetchone()  # Retorna um único resultado da query
+        if result:
+            return result
+        else:
+            print('Usuário não encontrado')
+
+    def get_user_by_name(self, name):
+        self.cursor.execute(f'''SELECT * FROM USERS WHERE NAME = "{name}"''')
+        result = self.cursor.fetchone()  # Retorna um único resultado da query
+        if result:
+            return result
+        else:
+            print('Usuário não encontrado')
+
+    def show_user_by_id(self, ID):
+        self.cursor.execute(f'''SELECT image FROM USERS WHERE userID = "{ID}"''')
+        result = self.cursor.fetchone()  # Retorna um único resultado da query
+        if result:
+            self.__show_image(result)
+        else:
+            print('sem usuários cadastrados :)')
         return
 
     def __show_image(self, imagebytes):
-        print("show image foi chado!!!")
         image = decode_image_from_uint8(imagebytes)
 
         # --- Display image
-        cv2.imshow('image', image)
+        cv2.imshow('Usuário logado', image)
         k = cv2.waitKey(0)
         if k == 27:  # wait for ESC key to exit
             cv2.destroyAllWindows()
 
-#
-# if __name__ == '__main__':
-#     db = Database()
-#     connection = db.create_connection(DATABASE_FILE_PATH)  # Concatena o caminho atual + nome do arquivo .db
-#     db.create_user()
-#     db.close_connection()  # Finaliza a conexão com o banco de dados.
+    def get_rank_by_rankID(self, rankID):
+        self.cursor.execute(f'''SELECT * FROM RANKS WHERE rankID = "{rankID}"''')
+        result = self.cursor.fetchone()  # Retorna um único resultado da query
+        print(result)
+        if result:
+            return result
+        else:
+            print('Rank não encontrado')
+
+    def get_info_by_rankID(self, rankID):
+        self.cursor.execute(f'''SELECT * FROM RANKS WHERE rankID < "{rankID + 1}"''')
+        result = self.cursor.fetchall()  # Retorna um único resultado da query
+        print(result)
+        if result:
+            return result
+        else:
+            print('Rank não encontrado')

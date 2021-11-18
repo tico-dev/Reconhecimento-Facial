@@ -4,7 +4,7 @@ QUERY_CREATE_TABLE_RANKS = """
             CREATE TABLE IF NOT EXISTS Ranks (
                 rankID INTEGER PRIMARY KEY,
                 name TEXT NOT NULL UNIQUE,
-                description TEXT NOT NULL
+                information TEXT NOT NULL
             );"""
 
 QUERY_CREATE_TABLE_USERS = """
@@ -21,4 +21,4 @@ QUERY_CREATE_TABLE_USERS = """
 
 QUERY_INSERT_USER = """INSERT INTO USERS(name,mail,phone,image,rankID) VALUES (?,?,?,?,?)"""
 
-QUERY_INSERT_RANKS = """INSERT INTO RANKS(name,description) VALUES (?,?)"""
+QUERY_INSERT_RANKS = """INSERT INTO RANKS(name,information) VALUES (?,?)"""

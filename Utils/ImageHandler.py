@@ -41,6 +41,6 @@ def decode_image_from_uint8(image_bytes):
     try:
         nparr = np.frombuffer(image_bytes, np.uint8)  # Decodifica os bytes de uint8 para um array de bytes (imagem)
         img_np = cv2.imdecode(nparr, cv2.IMREAD_COLOR)  # Transforma os bytes da imagem em um objeto de imagem
-        return img_np
+        return np.array(img_np)
     except Exception as E:
         print(f'[DEBUG]: erro na função decode_image_from_uint8: {E}')
