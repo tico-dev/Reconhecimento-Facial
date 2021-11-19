@@ -24,7 +24,7 @@ def recognize_face(users: list):
         known_face_names.append(user.name)
 
     if not known_face_encodings:
-        return 'NÃO EXISTEM USUÁRIOS CADASTRADOS'
+        return 'ERRO: NÃO EXISTEM USUÁRIOS CADASTRADOS'
 
     # Initialize some variables
     face_locations = []

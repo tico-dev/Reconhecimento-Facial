@@ -43,4 +43,5 @@ class Authenticator:
             self.users.append(user)
 
     def identify_user(self):
-        return recognize_face(self.users)
+        result = recognize_face(self.users)
+        return result

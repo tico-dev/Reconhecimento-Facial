@@ -35,6 +35,9 @@ if __name__ == '__main__':
             AuthenticatorApp = Authenticator()
             result = AuthenticatorApp.identify_user()
             if result:
+                if 'ERRO' in result:
+                    print(result)
+                    continue
                 userdata = db.get_user_by_name(result)
                 user = User(userdata[0], userdata[1], userdata[2], userdata[3], userdata[4], userdata[5])
 
