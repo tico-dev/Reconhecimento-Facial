@@ -1,7 +1,6 @@
 from Graphical_Interfaces.user_registration import RegisterRoot
 from Graphical_Interfaces.user_authentication import Authenticator
 from Graphical_Interfaces.user_authenticated import AuthenticatedRoot
-from time import sleep
 
 from Database.DBConnector import Database
 from Utils.general import DATABASE_FILE_PATH, User
@@ -16,7 +15,6 @@ if __name__ == '__main__':
                              '3- finalizar o programa.\n[user]: '))
         except ValueError:
             print("Por favor, digite apenas números.")
-            sleep(1)
             continue
 
         if decision not in (1, 2, 3):
@@ -47,5 +45,4 @@ if __name__ == '__main__':
 
             elif decision == 3:
                 print('finalizando programa...')
-                sleep(2)
                 exit()

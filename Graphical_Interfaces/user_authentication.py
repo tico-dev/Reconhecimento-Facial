@@ -44,8 +44,3 @@ class Authenticator:
 
     def identify_user(self):
         return recognize_face(self.users)
-
-
-if __name__ == '__main__':
-    root = Authenticator()
-    print(root.identify_user())

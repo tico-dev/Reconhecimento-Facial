@@ -1,5 +1,4 @@
 import os
-from tkinter import messagebox
 
 from config import ROOT_DIR
 
