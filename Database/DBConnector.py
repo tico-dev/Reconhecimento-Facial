@@ -57,8 +57,6 @@ class Database:
         try:
             self.cursor.execute(f"SELECT * FROM RANKS")
             result = self.cursor.fetchall()
-            print(self.cursor.fetchall())
-            print(result)
             if len(result) > 0:
                 return True
             return False
@@ -177,7 +175,6 @@ class Database:
     def get_rank_by_rankID(self, rankID):
         self.cursor.execute(f'''SELECT * FROM RANKS WHERE rankID = "{rankID}"''')
         result = self.cursor.fetchone()  # Retorna um único resultado da query
-        print(result)
         if result:
             return result
         else:
@@ -186,7 +183,6 @@ class Database:
     def get_info_by_rankID(self, rankID):
         self.cursor.execute(f'''SELECT * FROM RANKS WHERE rankID < "{rankID + 1}"''')
         result = self.cursor.fetchall()  # Retorna um único resultado da query
-        print(result)
         if result:
             return result
         else:
